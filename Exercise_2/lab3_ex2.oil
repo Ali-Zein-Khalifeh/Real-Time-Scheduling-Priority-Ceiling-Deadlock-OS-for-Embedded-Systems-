@@ -1,0 +1,103 @@
+OIL_VERSION = "2.5";
+
+CPU test {    
+  OS config {
+    STATUS = STANDARD;
+    BUILD = TRUE {
+      TRAMPOLINE_BASE_PATH = "/home/alizeinkhalifeh/alizein/file1/trampoline";
+      APP_NAME = "Lab3_ex2_exe";
+      APP_SRC = "Lab3_ex2.cpp";
+      CPPCOMPILER = "avr-g++";
+      COMPILER = "avr-gcc";
+      LINKER = "avr-gcc";
+      ASSEMBLER = "avr-gcc";
+      COPIER = "avr-objcopy";
+      SYSTEM = PYTHON;
+	
+      LIBRARY = serial;
+
+    };
+  };
+
+  APPMODE stdAppmode {};
+
+  RESOURCE resource {
+	  RESOURCEPROPERTY = STANDARD;
+  };
+  
+  TASK taskA
+  {
+    AUTOSTART = TRUE {APPMODE = stdAppmode;};
+    SCHEDULE = FULL;
+    ACTIVATION = 1;
+    PRIORITY = 3;
+    RESOURCE = resource;
+  };
+
+  TASK taskB
+  {
+    AUTOSTART = TRUE {APPMODE = stdAppmode;};
+    SCHEDULE = FULL;
+    ACTIVATION = 1;
+    PRIORITY = 2;
+  };
+
+  TASK taskC
+  {
+    AUTOSTART = TRUE {APPMODE = stdAppmode;};
+    SCHEDULE = FULL;
+    ACTIVATION = 1;
+    PRIORITY = 1;
+    RESOURCE = resource;    
+  }; 
+
+  TASK taskSTOP
+  {
+    AUTOSTART = FALSE;
+    SCHEDULE = FULL;
+    ACTIVATION = 1;
+    PRIORITY = 99;
+  };   
+  
+  ALARM alarmA
+  {
+    COUNTER =SystemCounter;
+    ACTION = ACTIVATETASK {TASK = taskA;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 1000; CYCLETIME = 1000;};
+  };
+
+  ALARM alarmB
+  {
+    COUNTER =SystemCounter;
+    ACTION = ACTIVATETASK {TASK = taskB;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 1500; CYCLETIME = 1500;};
+  };
+
+  ALARM alarmC
+  {
+    COUNTER =SystemCounter;
+    ACTION = ACTIVATETASK {TASK = taskC;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 2800; CYCLETIME = 2800;};
+  };    
+
+  ALARM stop
+  {
+    COUNTER =SystemCounter;
+    ACTION = ACTIVATETASK {TASK = taskSTOP;};
+    AUTOSTART = TRUE {APPMODE = stdAppmode; ALARMTIME = 42000; CYCLETIME = 0;};
+  };
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
